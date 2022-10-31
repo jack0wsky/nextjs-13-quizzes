@@ -1,0 +1,30 @@
+.question {
+  @apply flex flex-col justify-center items-center;
+  @apply w-full h-[100vh];
+
+  &__category {
+    @apply font-semibold;
+    @apply opacity-60;
+  }
+
+  &__title {
+    @apply text-[24px] text-center;
+    @apply w-full max-w-[400px];
+  }
+
+  &__answers {
+    @apply mt-[50px];
+    @apply flex items-center gap-x-12;
+  }
+
+  &__answer {
+    @apply rounded-8 border-1 border-solid border-black;
+    @apply px-20 py-10;
+    @apply flex justify-center items-center;
+
+    &--selected {
+      @apply bg-black;
+      @apply text-white;
+    }
+  }
+}

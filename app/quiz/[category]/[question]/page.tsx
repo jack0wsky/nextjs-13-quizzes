@@ -1,66 +1,94 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { useQuiz } from "../../../../hooks/use-quiz";
+import classNames from "classnames";
 
 interface IApiQuestion {
   category: string;
   type: string;
   difficulty: string;
   question: string;
-  correct_answer: string;
-  incorrect_answers: string[];
+  correctAnswer: string;
+  incorrectAnswers: string[];
+  id: string;
+  regions: [];
+  tags: string[];
 }
 
 export default function Page() {
+  const [selected, setSelected] = useState<string | null>(null);
   const [question, setQuestion] = useState<IApiQuestion | null>(null);
-  const { addAnswer } = useQuiz();
+
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const page = pathname.split("/")[3];
+
+  const { addAnswer, answers } = useQuiz();
 
   const getQuestion = async () => {
     const response = await fetch(
-      "https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=boolean"
+      "https://the-trivia-api.com/api/questions?limit=1&difficulty=easy"
     );
 
-    const { results } = await response.json();
+    const data = await response.json();
 
-    setQuestion(results[0]);
+    setQuestion(data[0]);
   };
 
   useEffect(() => {
+    if (answers.length === 10) {
+      router.push("/quiz/summary");
+    }
+
     getQuestion();
   }, []);
 
+  const chooseAnswer = (
+    { question, correctAnswer }: IApiQuestion,
+    answer: string
+  ) => {
+    addAnswer({
+      question,
+      correctAnswer,
+      givenAnswer: answer,
+    });
+    setSelected(answer);
+
+    setTimeout(() => {
+      router.push(`/quiz/geography/${Number(page) + 1}`);
+    }, 1000);
+  };
+
   if (!question) return null;
 
+  const { correctAnswer, incorrectAnswers } = question;
+
+  const availableAnswers = [...incorrectAnswers, correctAnswer].sort((a, b) =>
+    a > b ? 1 : -1
+  );
+
   return (
-    <div>
+    <div className="question">
+      <p className="question__category">{question.category}</p>
       <h1
-        className="text-[24px]"
+        className="question__title"
         dangerouslySetInnerHTML={{ __html: question.question }}
       />
-      <div>
-        <button
-          onClick={() =>
-            addAnswer({
-              question: question.question,
-              correctAnswer: question.correct_answer,
-              givenAnswer: "True",
-            })
-          }
-        >
-          True
-        </button>
-        <button
-          onClick={() =>
-            addAnswer({
-              question: question.question,
-              correctAnswer: question.correct_answer,
-              givenAnswer: "False",
-            })
-          }
-        >
-          False
-        </button>
+      <div className="question__answers">
+        {availableAnswers.map((answer) => (
+          <button
+            key={answer}
+            className={classNames("question__answer", {
+              "question__answer--selected": selected === answer,
+            })}
+            onClick={() => chooseAnswer(question, answer)}
+          >
+            {answer}
+          </button>
+        ))}
       </div>
     </div>
   );

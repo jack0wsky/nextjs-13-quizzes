@@ -2,11 +2,12 @@
 
 import { ReactNode, useState } from "react";
 import { Store } from "../store/store";
-import { IGivenAnswer } from "../types";
+import { IGivenAnswer, DifficultyLevel } from "../types";
 import "./index.scss";
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   const [category, setCategory] = useState("");
+  const [difficulty, setDifficulty] = useState<DifficultyLevel | null>(null);
   const [answers, setAnswers] = useState<IGivenAnswer[]>([]);
 
   const addAnswer = (answer: IGivenAnswer) => {
@@ -16,7 +17,16 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html>
       <body>
-        <Store.Provider value={{ category, setCategory, answers, addAnswer }}>
+        <Store.Provider
+          value={{
+            category,
+            difficulty,
+            setDifficulty,
+            setCategory,
+            answers,
+            addAnswer,
+          }}
+        >
           {children}
         </Store.Provider>
       </body>

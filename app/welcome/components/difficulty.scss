@@ -1,0 +1,22 @@
+.difficulty {
+  @apply flex flex-col;
+
+  &__options {
+    @apply flex;
+  }
+
+  &__option {
+    @apply px-20 py-10;
+    @apply border-1 border-solid;
+
+    &--easy {
+      @apply border-[#6EEB83];
+    }
+
+    button {
+      @apply flex justify-center items-center;
+      @apply w-full h-full;
+      @apply capitalize;
+    }
+  }
+}

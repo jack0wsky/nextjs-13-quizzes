@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 
-export default function Layout({ children }: { children: ReactNode }) {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <html>
       <head>
-        <title>Question</title>
+        <title>Summary</title>
       </head>
       <body>{children}</body>
     </html>
   );
-}
+};
+
+export default Layout;
