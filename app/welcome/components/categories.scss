@@ -1,0 +1,25 @@
+.categories {
+  @apply flex flex-col;
+  @apply w-full max-w-[500px];
+
+  &__list {
+    @apply flex flex-wrap gap-8;
+  }
+
+  &__list-item {
+    @apply border-1 border-solid border-black;
+    @apply w-max;
+
+    button {
+      @apply w-max;
+    }
+  }
+
+  &__list-item-button {
+    @apply px-12;
+
+    &--selected {
+      @apply bg-black text-white;
+    }
+  }
+}
