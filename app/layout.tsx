@@ -10,6 +10,11 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   const [difficulty, setDifficulty] = useState<DifficultyLevel | null>(null);
   const [answers, setAnswers] = useState<IGivenAnswer[]>([]);
 
+  const resetQuiz = () => {
+    setDifficulty(null);
+    setAnswers([]);
+  };
+
   const addAnswer = (answer: IGivenAnswer) => {
     setAnswers([answer, ...answers]);
   };
@@ -25,6 +30,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
             setCategory,
             answers,
             addAnswer,
+            resetQuiz,
           }}
         >
           {children}

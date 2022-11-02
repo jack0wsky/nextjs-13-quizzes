@@ -20,13 +20,16 @@ interface IApiQuestion {
 export default function Page() {
   const [selected, setSelected] = useState<string | null>(null);
   const [question, setQuestion] = useState<IApiQuestion | null>(null);
+  const [validateAnswer, setValidateAnswer] = useState<
+    "correct" | "incorrect" | null
+  >(null);
 
   const router = useRouter();
   const pathname = usePathname();
 
   const page = pathname.split("/")[3];
 
-  const { addAnswer, answers } = useQuiz();
+  const { addAnswer, answers, difficulty } = useQuiz();
 
   const getQuestion = async () => {
     const response = await fetch(
@@ -35,15 +38,25 @@ export default function Page() {
 
     const data = await response.json();
 
-    setQuestion(data[0]);
+    return setQuestion(data[0]);
   };
 
   useEffect(() => {
+    if (!difficulty) {
+      return router.push("/welcome");
+    }
+
     if (answers.length === 10) {
       router.push("/quiz/summary");
     }
 
+    if (!!question) return;
+
     getQuestion();
+
+    return () => {
+      setQuestion(null);
+    };
   }, []);
 
   const chooseAnswer = (
@@ -55,10 +68,11 @@ export default function Page() {
       correctAnswer,
       givenAnswer: answer,
     });
+    setValidateAnswer(correctAnswer === answer ? "correct" : "incorrect");
     setSelected(answer);
 
     setTimeout(() => {
-      router.push(`/quiz/geography/${Number(page) + 1}`);
+      router.push(`/quiz/main/${Number(page) + 1}`);
     }, 1000);
   };
 
@@ -72,6 +86,7 @@ export default function Page() {
 
   return (
     <div className="question">
+      <p className="question__number">{page} of 10 questions</p>
       <p className="question__category">{question.category}</p>
       <h1
         className="question__title"
@@ -83,6 +98,10 @@ export default function Page() {
             key={answer}
             className={classNames("question__answer", {
               "question__answer--selected": selected === answer,
+              "question__answer--correct":
+                validateAnswer === "correct" && selected === answer,
+              "question__answer--incorrect":
+                validateAnswer === "incorrect" && selected === answer,
             })}
             onClick={() => chooseAnswer(question, answer)}
           >
@@ -90,6 +109,13 @@ export default function Page() {
           </button>
         ))}
       </div>
+
+      {validateAnswer === "correct" && (
+        <p className="question__correct-answer">This is true! 🎉</p>
+      )}
+      {validateAnswer === "incorrect" && (
+        <p className="question__wrong-answer">Wrong ☹️</p>
+      )}
     </div>
   );
 }

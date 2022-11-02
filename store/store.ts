@@ -8,6 +8,7 @@ interface IState {
   setDifficulty: (difficulty: DifficultyLevel) => void;
   setCategory: (category: string) => void;
   addAnswer: (answer: IGivenAnswer) => void;
+  resetQuiz: () => void;
 }
 
 export const Store = createContext<IState>({
@@ -17,4 +18,5 @@ export const Store = createContext<IState>({
   answers: [],
   setCategory: () => {},
   addAnswer: () => {},
+  resetQuiz: () => {},
 });

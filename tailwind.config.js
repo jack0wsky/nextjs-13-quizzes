@@ -2,8 +2,13 @@
 module.exports = {
   mode: "jit",
   purge: ["./**/**/*.{tsx,scss}"],
-  // content: ["./**/**/*.{tsx,scss}"],
+  content: ["./**/**/*.{tsx,scss}"],
   theme: {
+    extend: {
+      black: "#1f1f1f",
+      green: "#2bbe3f",
+      red: "#f6426e",
+    },
     borderWidth: {
       1: "1px",
     },
@@ -19,9 +24,6 @@ module.exports = {
       10: "10px",
       8: "8px",
       4: "4px",
-    },
-    extend: {
-      black: "#1f1f1f",
     },
   },
   plugins: [],

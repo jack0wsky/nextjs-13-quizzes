@@ -1,20 +1,25 @@
 .difficulty {
   @apply flex flex-col;
+  @apply my-[28px];
 
   &__options {
-    @apply flex;
+    @apply flex gap-x-12;
   }
 
   &__option {
-    @apply px-20 py-10;
     @apply border-1 border-solid;
 
     &--easy {
       @apply border-[#6EEB83];
     }
 
+    &--selected {
+      @apply bg-black text-white;
+    }
+
     button {
       @apply flex justify-center items-center;
+      @apply px-20 py-10;
       @apply w-full h-full;
       @apply capitalize;
     }

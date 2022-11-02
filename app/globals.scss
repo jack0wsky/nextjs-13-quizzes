@@ -1,13 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
-
 a {
   color: inherit;
   text-decoration: none;
 }
+@tailwind base;
+@tailwind components;
 
 * {
   padding: 0;
@@ -17,3 +13,12 @@ a {
   background-color: #fff;
   color: #000;
 }
+
+.button {
+  @apply bg-black text-white;
+  @apply px-20 py-10;
+  @apply flex justify-center items-center;
+  @apply rounded-4;
+}
+
+@tailwind utilities;

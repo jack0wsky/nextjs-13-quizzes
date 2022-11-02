@@ -1,4 +1,8 @@
 .summary {
-  @apply flex justify-center items-center;
+  @apply flex flex-col justify-center items-center;
   @apply w-full h-[100vh];
+
+  &__try-again {
+    @apply mt-[20px];
+  }
 }

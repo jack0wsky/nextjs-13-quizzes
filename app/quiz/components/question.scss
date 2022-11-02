@@ -2,13 +2,17 @@
   @apply flex flex-col justify-center items-center;
   @apply w-full h-[100vh];
 
+  &__number {
+    @apply mb-[20px];
+  }
+
   &__category {
     @apply font-semibold;
     @apply opacity-60;
   }
 
   &__title {
-    @apply text-[24px] text-center;
+    @apply text-[24px] text-center font-bold;
     @apply w-full max-w-[400px];
   }
 
@@ -26,5 +30,21 @@
       @apply bg-black;
       @apply text-white;
     }
+
+    &--correct {
+      @apply bg-[#2bbe3f] text-white;
+    }
+
+    &--incorrect {
+      @apply bg-[#f6426e] text-white;
+    }
+  }
+
+  &__correct-answer {
+    @apply text-[#2bbe3f];
+  }
+
+  &__wrong-answer {
+    @apply text-[#f6426e];
   }
 }

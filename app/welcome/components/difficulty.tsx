@@ -16,9 +16,7 @@ const Difficulty = () => {
           <li
             key={level}
             className={classNames("difficulty__option", {
-              "difficulty__option--easy": level === "easy",
-              "difficulty__option--medium": level === "medium",
-              "difficulty__option--hard": level === "hard",
+              "difficulty__option--selected": level === difficulty,
             })}
           >
             <button onClick={() => setDifficulty(level)}>{level}</button>
